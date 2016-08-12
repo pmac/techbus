@@ -1,11 +1,8 @@
-FROM quay.io/mozmar/ubuntu-slim-python:latest
+FROM quay.io/deis/base:0.3.0
+CMD ["nginx"]
 
-WORKDIR /app
-CMD ["nginx", "-c",  "/app/nginx.conf"]
-
-RUN apt-get update && apt-get install -y nginx-light
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nginx-light && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends nginx
 
-ADD . /app
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY html/ /usr/share/nginx/html
